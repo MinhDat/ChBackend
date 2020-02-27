@@ -1,13 +1,14 @@
 package db
 
 import (
+	"ChGo/models"
+	"fmt"
+	"log"
 	"os"
-    "fmt"
-    "log"
-  _ "github.com/lib/pq"
-    "github.com/jinzhu/gorm"
-  _ "github.com/jinzhu/gorm/dialects/postgres"
-    "github.com/hugomd/go-todo/models"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/lib/pq"
 )
 
 var db *gorm.DB
@@ -20,7 +21,7 @@ func getEnv(key, fallback string) string {
 	return fallback
 }
 
-// Init creates a connection to mysql database and 
+// Init creates a connection to mysql database and
 // migrates any new models
 func Init() {
 	user := getEnv("PG_USER", "hugo")
@@ -29,36 +30,44 @@ func Init() {
 	port := getEnv("PG_PORT", "8080")
 	database := getEnv("PG_DB", "tasks")
 
-  dbinfo := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable",
-    user,
-    password,
-    host,
-    port,
-    database,
-  )
+	dbinfo := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable",
+		user,
+		password,
+		host,
+		port,
+		database,
+	)
 
-  db, err = gorm.Open("postgres", dbinfo)
-  if err != nil {
-    log.Println("Failed to connect to database")
-    panic(err)
-  }
-  log.Println("Database connected")
+	db, err = gorm.Open("postgres", dbinfo)
+	if err != nil {
+		log.Println("Failed to connect to database")
+		panic(err)
+	}
+	log.Println("Database connected")
 
-  if !db.HasTable(&models.Task{}) {
-    err := db.CreateTable(&models.Task{})
-    if err != nil {
-      log.Println("Table already exists")
-    }
-  }
+	if !db.HasTable(&models.Task{}) {
+		err := db.CreateTable(&models.Task{})
+		if err != nil {
+			log.Println("Table already exists")
+		}
+	}
 
-  db.AutoMigrate(&models.Task{})
+	if !db.HasTable(&models.User{}) {
+		err := db.CreateTable(&models.User{})
+		if err != nil {
+			log.Println("User table already exists")
+		}
+	}
+
+	db.AutoMigrate(&models.Task{})
+	db.AutoMigrate(&models.User{})
 }
 
 //GetDB ...
 func GetDB() *gorm.DB {
-  return db
+	return db
 }
 
 func CloseDB() {
-  db.Close()
+	db.Close()
 }
