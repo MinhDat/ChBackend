@@ -1,3 +1,3 @@
 FROM scratch
-ADD go-binary /
-CMD ["/go-binary"]
+ADD build/main /
+CMD ["/main"]
