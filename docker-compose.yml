@@ -2,7 +2,8 @@ version: "3"
 
 services:
   chgo:
-    build: .
+    image: daxua/chgo:0.0.1
+    # build: .
     restart: always
     container_name: chgo
     depends_on:

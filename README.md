@@ -7,7 +7,6 @@
 Clone this repository and run:
 
 ```
-./build.sh
 docker-compose up
 ```
 
@@ -30,3 +29,9 @@ docker-compose down
 ```
 
 Using _adminer_ access: `localhost:8080`
+
+## Build docker image for ChGo
+
+```
+./build.sh
+```
