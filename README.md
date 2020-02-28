@@ -4,6 +4,13 @@
 
 ## Docker
 
+Stop & remove older docker container
+
+```
+docker stop $(docker ps -aq)
+docker system prune -aq
+```
+
 Clone this repository and run:
 
 ```
@@ -12,12 +19,14 @@ docker-compose up
 
 You can then hit the following endpoints:
 
-| Method | Route             | Body                                         |
-| ------ | ----------------- | -------------------------------------------- |
-| GET    | /api/v1/tasks     |                                              |
-| POST   | /api/v1/tasks     | `{"title": "task title"}`                    |
-| DELETE | /api/v1/tasks/:id |                                              |
-| PUT    | /api/v1/tasks/:id | `{"title": "task title", "completed": true}` |
+| Method | Route               | Body                                         |
+| ------ | ------------------- | -------------------------------------------- |
+| GET    | /v1/tasks           |                                              |
+| POST   | /v1/tasks           | `{"title": "task title"}`                    |
+| DELETE | /v1/tasks/:id       |                                              |
+| PUT    | /v1/tasks/:id       | `{"title": "task title", "completed": true}` |
+| POST   | /v1/noauth/register | `{"Usename": "admin", "Password": "admin"}`  |
+| POST   | /v1/noauth/login    | `{"Usename": "admin", "Password": "admin"}`  |
 
 ## Development
 
