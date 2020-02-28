@@ -1,4 +1,4 @@
-package auth
+package middlewares
 
 import (
 	"ChGo/db"
@@ -10,10 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Token struct {
+	Type    string
+	Token   string
+	Refresh string
+}
+
 // Login "Object
 type Login struct {
-	Username string `form:"username" json:"username" binding:"required"`
-	Password string `form:"password" json:"password" binding:"required"`
+	Username string `binding:"required"`
+	Password string `binding:"required"`
 }
 
 var hmacSampleSecret = []byte("ChStore")
@@ -21,7 +27,7 @@ var hmacSampleSecret = []byte("ChStore")
 // Create a struct that will be encoded to a JWT.
 // We add jwt.StandardClaims as an embedded type, to provide fields like expiry time
 type Claims struct {
-	Username string `json:"username"`
+	Username string
 	jwt.StandardClaims
 }
 
@@ -32,7 +38,7 @@ func Sign(c *gin.Context) {
 	c.BindJSON(&login)
 	db := db.GetDB()
 	if err := db.Where("Username = ?", login.Username).First(&user).Error; err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
@@ -53,7 +59,17 @@ func Sign(c *gin.Context) {
 	// Create the JWT string
 	tokenString, _ := token.SignedString(hmacSampleSecret)
 
-	c.JSON(http.StatusOK, tokenString)
+	c.JSON(http.StatusOK, models.Response{
+		Status: "Success",
+		Data: Token{
+			Type:  "Bearer",
+			Token: tokenString,
+		},
+	})
 	// Create a new token object, specifying signing method and the claims
 	// you would like it to contain.
+}
+
+func AuthRequired(c *gin.Context) {
+
 }

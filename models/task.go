@@ -17,12 +17,12 @@ type Task struct {
 }
 
 func (task *Task) BeforeCreate(scope *gorm.Scope) error {
-	scope.SetColumn("CreatedAt", time.Now())
-	scope.SetColumn("ID", uuid.NewV4)
+	task.ID, _ = uuid.NewV4()
+	task.CreatedAt = time.Now()
 	return nil
 }
 
 func (task *Task) BeforeUpdate(scope *gorm.Scope) error {
-	scope.SetColumn("UpdatedAt", time.Now())
+	task.UpdatedAt = time.Now()
 	return nil
 }

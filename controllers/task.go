@@ -1,4 +1,4 @@
-package task
+package controllers
 
 import (
 	"net/http"
