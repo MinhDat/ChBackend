@@ -10,16 +10,16 @@ import (
 	"ChGo/models"
 )
 
-func GetTasks(c *gin.Context) {
+func GetProducts(c *gin.Context) {
 
-	var tasks []models.Task
+	var tasks []models.Product
 	db := db.GetDB()
 	db.Find(&tasks)
 	c.JSON(200, tasks)
 }
 
-func CreateTask(c *gin.Context) {
-	var task models.Task
+func CreateProduct(c *gin.Context) {
+	var task models.Product
 	var db = db.GetDB()
 
 	if err := c.BindJSON(&task); err != nil {
@@ -32,9 +32,9 @@ func CreateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, &task)
 }
 
-func UpdateTask(c *gin.Context) {
+func UpdateProduct(c *gin.Context) {
 	id := c.Param("id")
-	var task models.Task
+	var task models.Product
 
 	db := db.GetDB()
 	if err := db.Where("id = ?", id).First(&task).Error; err != nil {
@@ -46,9 +46,9 @@ func UpdateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, &task)
 }
 
-func DeleteTask(c *gin.Context) {
+func DeleteProduct(c *gin.Context) {
 	id := c.Param("id")
-	var task models.Task
+	var task models.Product
 	db := db.GetDB()
 
 	if err := db.Where("id = ?", id).First(&task).Error; err != nil {

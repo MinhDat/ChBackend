@@ -1,6 +1,12 @@
 # ChGo
 
-> Simple to do list API with Gin and Gorm (with Postgres)
+> Backend list API with Gin and Gorm (with Postgres)
+
+## Migrate database
+
+```
+./migrate.sh
+```
 
 ## Docker
 
@@ -39,8 +45,9 @@ docker-compose down
 ```
 
 Using _adminer_ access: `localhost:8080`
-Username: `postgres`
-Password: `c9BqhGZM5v7EPTs7`
+
+- Username: `postgres`
+- Password: `c9BqhGZM5v7EPTs7`
 
 ## Build docker image for ChGo
 

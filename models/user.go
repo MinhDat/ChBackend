@@ -1,6 +1,7 @@
 package models
 
 import (
+	"ChGo/models/common"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -10,17 +11,15 @@ import (
 
 // User "Object
 type User struct {
-	ID        uuid.UUID `json:"id"`
-	Username  string    `form:"username" json:"username" binding:"required"`
-	Password  string    `form:"password" json:"password" binding:"required"`
-	FirstName string    `json:"first_name"`
-	LastName  string    `json:"last_name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	common.Model
+	Username  string `form:"username" json:"username" binding:"required"`
+	Password  string `form:"password" json:"password" binding:"required"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
 }
 
 func (user *User) BeforeCreate(scope *gorm.Scope) error {
-	user.ID, _ = uuid.NewV4()
+	user.UUID, _ = uuid.NewV4()
 	user.CreatedAt = time.Now()
 	hash, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
 	user.Password = string(hash)

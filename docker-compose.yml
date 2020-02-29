@@ -2,8 +2,8 @@ version: "3"
 
 services:
   chgo:
-    image: daxua/chgo:0.0.3
-    # build: .
+    # image: daxua/chgo:0.0.3
+    build: .
     restart: always
     container_name: chgo
     depends_on:
@@ -16,7 +16,7 @@ services:
       - PG_PASSWORD=c9BqhGZM5v7EPTs7
       - PG_HOST=postgres
       - PG_PORT=5432
-      - PG_DB=tasks
+      - PG_DB=chstore
     ports:
       - 9000:9000
 
@@ -30,7 +30,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: c9BqhGZM5v7EPTs7
-      POSTGRES_DB: tasks
+      POSTGRES_DB: chstore
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - 5432:5432

@@ -1,6 +1,7 @@
-package db
+package main
 
 import (
+	"ChGo/models"
 	"fmt"
 	"log"
 	"os"
@@ -10,9 +11,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var db *gorm.DB
-var err error
-
 func getEnv(key, fallback string) string {
 	if value, ok := os.LookupEnv(key); ok {
 		return value
@@ -20,9 +18,7 @@ func getEnv(key, fallback string) string {
 	return fallback
 }
 
-// Init creates a connection to mysql database and
-// migrates any new models
-func Init() {
+func main() {
 	user := getEnv("PG_USER", "hugo")
 	password := getEnv("PG_PASSWORD", "")
 	host := getEnv("PG_HOST", "localhost")
@@ -37,20 +33,29 @@ func Init() {
 		database,
 	)
 
-	db, err = gorm.Open("postgres", dbinfo)
+	db, err := gorm.Open("postgres", dbinfo)
 	if err != nil {
 		log.Println("Failed to connect to database")
 		panic(err)
 	}
 	log.Println("Database connected")
-}
 
-//GetDB ...
-func GetDB() *gorm.DB {
-	return db
-}
+	if !db.HasTable(&models.User{}) {
+		err := db.CreateTable(&models.User{})
+		if err != nil {
+			log.Println("User table already exists")
+		}
+	}
 
-//CloseDB ...
-func CloseDB() {
+	if !db.HasTable(&models.Product{}) {
+		err := db.CreateTable(&models.Product{})
+		if err != nil {
+			log.Println("Table already exists")
+		}
+	}
+
+	db.AutoMigrate(&models.User{}, &models.Product{})
+	db.Model(&models.Product{}).AddForeignKey("owner_id", "users(uuid)", "RESTRICT", "RESTRICT")
+
 	db.Close()
 }
