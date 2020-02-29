@@ -2,10 +2,8 @@ package models
 
 import (
 	"ChGo/models/common"
-	"time"
 
 	"github.com/jinzhu/gorm"
-	uuid "github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -18,15 +16,8 @@ type User struct {
 	LastName  string `json:"last_name"`
 }
 
-func (user *User) BeforeCreate(scope *gorm.Scope) error {
-	user.UUID, _ = uuid.NewV4()
-	user.CreatedAt = time.Now()
+func (user *User) AfterCreate(scope *gorm.Scope) error {
 	hash, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
-	user.Password = string(hash)
-	return nil
-}
-
-func (user *User) BeforeUpdate(scope *gorm.Scope) error {
-	user.UpdatedAt = time.Now()
+	scope.DB().Model(user).Update("password", hash)
 	return nil
 }

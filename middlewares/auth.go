@@ -24,7 +24,29 @@ const (
 var expirationTime = time.Now().Add(60 * time.Minute)
 var refreshExpirationTime = time.Now().Add(24 * time.Hour)
 
-var UnAuthorizedResponse = models.Response{
+func tokenResponse(tokenString string, refreshTokenString string) models.Response {
+	return models.Response{
+		Status: "Success",
+		Data: Token{
+			Type:         "Bearer",
+			Token:        tokenString,
+			RefreshToken: refreshTokenString,
+		},
+	}
+}
+
+func getTokenFromHeader(c *gin.Context) (tokenstring string) {
+	tokenString := c.GetHeader("Authorization")
+
+	if len(tokenString) == 0 {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
+	}
+
+	tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
+	return
+}
+
+var unAuthorizedResponse = models.Response{
 	Status: "Failure",
 	Error:  UNAUTHORIZED,
 }
@@ -50,11 +72,14 @@ type Claims struct {
 	Username string
 	jwt.StandardClaims
 }
+
+// RefreshClaims Object
 type RefreshClaims struct {
-	ID uuid.UUID
+	UUID uuid.UUID
 	jwt.StandardClaims
 }
 
+// Sign ...
 func Sign(c *gin.Context) {
 	var login Login
 	var user models.User
@@ -70,36 +95,24 @@ func Sign(c *gin.Context) {
 	}
 
 	if err := db.Where("username = ?", login.Username).First(&user).Error; err != nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, UnAuthorizedResponse)
+		c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(login.Password)); err != nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, UnAuthorizedResponse)
+		c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
 		return
 	}
 
 	// Create the JWT token
 	tokenString, refreshTokenString := generateToken(user)
 
-	c.JSON(http.StatusOK, models.Response{
-		Status: "Success",
-		Data: Token{
-			Type:         "Bearer",
-			Token:        tokenString,
-			RefreshToken: refreshTokenString,
-		},
-	})
+	c.JSON(http.StatusOK, tokenResponse(tokenString, refreshTokenString))
 }
 
+// Auth ...
 func Auth(c *gin.Context) {
-	tokenString := c.GetHeader("Authorization")
-
-	if len(tokenString) == 0 {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, UnAuthorizedResponse)
-	}
-
-	tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
+	tokenString := getTokenFromHeader(c)
 
 	// sample token is expired.  override time so it parses as valid
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
@@ -109,22 +122,14 @@ func Auth(c *gin.Context) {
 	if err == nil && token.Valid {
 		c.Next()
 	} else {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, UnAuthorizedResponse)
+		c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
 	}
 
 }
 
+// Refresh ...
 func Refresh(c *gin.Context) {
-	tokenString := c.GetHeader("Authorization")
-
-	if len(tokenString) == 0 {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, models.Response{
-			Status: "Failure",
-			Error:  UNAUTHORIZED,
-		})
-	}
-
-	tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
+	tokenString := getTokenFromHeader(c)
 
 	// sample token is expired.  override time so it parses as valid
 	token, err := jwt.ParseWithClaims(tokenString, &RefreshClaims{}, func(token *jwt.Token) (interface{}, error) {
@@ -135,25 +140,18 @@ func Refresh(c *gin.Context) {
 		var user models.User
 
 		db := db.GetDB()
-		if err := db.Where("id = ?", claims.ID).First(&user).Error; err != nil {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, UnAuthorizedResponse)
+		if err := db.Where("uuid = ?", claims.UUID).First(&user).Error; err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
 			return
 		}
 
 		// Create the JWT token
 		tokenString, refreshTokenString := generateToken(user)
 
-		c.JSON(http.StatusOK, models.Response{
-			Status: "Success",
-			Data: Token{
-				Type:         "Bearer",
-				Token:        tokenString,
-				RefreshToken: refreshTokenString,
-			},
-		})
+		c.JSON(http.StatusOK, tokenResponse(tokenString, refreshTokenString))
 
 	} else {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, UnAuthorizedResponse)
+		c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
 	}
 }
 
@@ -168,7 +166,7 @@ func generateToken(user models.User) (tokenString string, refreshTokenString str
 	}
 
 	refreshClaims := &RefreshClaims{
-		ID: user.ID,
+		UUID: user.UUID,
 		StandardClaims: jwt.StandardClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: refreshExpirationTime.Unix(),
