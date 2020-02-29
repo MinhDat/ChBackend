@@ -19,14 +19,15 @@ docker-compose up
 
 You can then hit the following endpoints:
 
-| Method | Route               | Body                                         |
-| ------ | ------------------- | -------------------------------------------- |
-| GET    | /v1/tasks           |                                              |
-| POST   | /v1/tasks           | `{"title": "task title"}`                    |
-| DELETE | /v1/tasks/:id       |                                              |
-| PUT    | /v1/tasks/:id       | `{"title": "task title", "completed": true}` |
-| POST   | /v1/noauth/register | `{"Usename": "admin", "Password": "admin"}`  |
-| POST   | /v1/noauth/login    | `{"Usename": "admin", "Password": "admin"}`  |
+| Method | Route               | Header                                      | Body                                         |
+| ------ | ------------------- | ------------------------------------------- | -------------------------------------------- |
+| GET    | /v1/tasks           | `{Authorization: "Bearer ${Token}"}`        |                                              |
+| POST   | /v1/tasks           | `{Authorization: "Bearer ${Token}"}`        | `{"title": "task title"}`                    |
+| DELETE | /v1/tasks/:id       | `{Authorization: "Bearer ${Token}"}`        |                                              |
+| PUT    | /v1/tasks/:id       | `{Authorization: "Bearer ${Token}"}`        | `{"title": "task title", "completed": true}` |
+| POST   | /v1/noauth/register |                                             | `{"Usename": "admin", "Password": "admin"}`  |
+| POST   | /v1/noauth/login    |                                             | `{"Usename": "admin", "Password": "admin"}`  |
+| GET    | /v1/noauth/refresh  | `{Authorization: "Bearer ${RefreshToken}"}` | `{"Usename": "admin", "Password": "admin"}`  |
 
 ## Development
 
@@ -38,6 +39,8 @@ docker-compose down
 ```
 
 Using _adminer_ access: `localhost:8080`
+Username: `postgres`
+Password: `c9BqhGZM5v7EPTs7`
 
 ## Build docker image for ChGo
 

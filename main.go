@@ -19,9 +19,9 @@ func main() {
 
 	v1 := r.Group("/v1")
 	{
-		tasks := v1.Group("/tasks")
+		tasks := v1.Group("/tasks", middlewares.Auth)
 		{
-			tasks.GET("/", controllers.CreateTask)
+			tasks.GET("/", controllers.GetTasks)
 			tasks.POST("/", controllers.CreateTask)
 			tasks.PUT("/:id", controllers.UpdateTask)
 			tasks.DELETE("/:id", controllers.DeleteTask)
@@ -31,17 +31,14 @@ func main() {
 		{
 			noauth.POST("/login", middlewares.Sign)
 			noauth.POST("/register", controllers.Register)
+			noauth.GET("/refresh", middlewares.Refresh)
 		}
 
 	}
 
-	// r.NoRoute(func(c *gin.Context) {
-	// 	c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
-	// })
-
-	// if err := http.ListenAndServe(":"+port, r); err != nil {
-	// 	log.Fatal(err)
-	// }
+	r.NoRoute(func(c *gin.Context) {
+		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
+	})
 
 	r.Run()
 }
