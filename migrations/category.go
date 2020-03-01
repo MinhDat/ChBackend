@@ -16,5 +16,4 @@ func MigrateCategory(db *gorm.DB) {
 			log.Println("Category table already exists")
 		}
 	}
-	db.Model(&models.Category{}).AddForeignKey("owner_id", "users(uuid)", "RESTRICT", "RESTRICT")
 }

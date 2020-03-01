@@ -13,4 +13,5 @@ type Category struct {
 	Image    string    `json:"image"`
 	OwnerID  uuid.UUID `json:"owner_id"`
 	ParentID uuid.UUID `json:"parent_id"`
+	Type     int       `json:"type"`
 }

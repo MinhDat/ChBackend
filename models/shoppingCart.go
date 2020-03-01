@@ -9,6 +9,6 @@ import (
 // Product "Object
 type ShoppingCart struct {
 	common.Model
-	UserID     uuid.UUID   `json:"user_id"`
+	OwnerID     uuid.UUID   `json:"owner_id"`
 	ProductIDs common.JSON `sql:"type:json" json:"object"`
 }

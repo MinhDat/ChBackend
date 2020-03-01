@@ -9,11 +9,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func MigrateFavorite(db *gorm.DB) {
-	if !db.HasTable(&models.Favorite{}) {
-		err := db.CreateTable(&models.Favorite{})
+func MigrateRating(db *gorm.DB) {
+	if !db.HasTable(&models.Rating{}) {
+		err := db.CreateTable(&models.Rating{})
 		if err != nil {
-			log.Println("Favorite table already exists")
+			log.Println("Rating table already exists")
 		}
 	}
 }

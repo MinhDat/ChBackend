@@ -9,6 +9,6 @@ import (
 // Product "Object
 type Favorite struct {
 	common.Model
-	UserID    uuid.UUID `json:"user_id"`
+	OwnerID    uuid.UUID `json:"owner_id"`
 	ProductID uuid.UUID `json:"product_id"`
 }

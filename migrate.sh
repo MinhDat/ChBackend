@@ -4,4 +4,4 @@ export PG_PASSWORD=c9BqhGZM5v7EPTs7
 export PG_HOST=localhost
 export PG_PORT=5432
 export PG_DB=chstore
-go run migrate/main.go
+go run migrations/migrate/main.go

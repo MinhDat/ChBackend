@@ -16,5 +16,4 @@ func MigrateCategoryTranslation(db *gorm.DB) {
 			log.Println("CategoryTranslation table already exists")
 		}
 	}
-	db.Model(&models.CategoryTranslation{}).AddForeignKey("category_id", "categories(uuid)", "RESTRICT", "RESTRICT")
 }

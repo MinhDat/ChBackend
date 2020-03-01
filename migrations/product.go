@@ -16,6 +16,4 @@ func MigrateProduct(db *gorm.DB) {
 			log.Println("Product table already exists")
 		}
 	}
-	db.Model(&models.Product{}).AddForeignKey("owner_id", "users(uuid)", "RESTRICT", "RESTRICT")
-	db.Model(&models.Product{}).AddForeignKey("category_id", "categories(uuid)", "RESTRICT", "RESTRICT")
 }

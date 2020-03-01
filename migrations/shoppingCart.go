@@ -16,5 +16,4 @@ func MigrateShoppingCart(db *gorm.DB) {
 			log.Println("ShoppingCart table already exists")
 		}
 	}
-	db.Model(&models.ShoppingCart{}).AddForeignKey("user_id", "users(uuid)", "RESTRICT", "RESTRICT")
 }

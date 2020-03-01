@@ -16,5 +16,4 @@ func MigratePayment(db *gorm.DB) {
 			log.Println("Payment table already exists")
 		}
 	}
-	db.Model(&models.Payment{}).AddForeignKey("shopping_cart_id", "shopping_carts(uuid)", "RESTRICT", "RESTRICT")
 }

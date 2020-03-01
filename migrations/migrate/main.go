@@ -43,24 +43,34 @@ func main() {
 	log.Println("Database connected")
 
 	// Migrate database
-	migrate.MigrateUser(db)
+	migrate.MigrateAuth(db)
 	migrate.MigrateCategory(db)
 	migrate.MigrateCategoryTranslation(db)
+	migrate.MigrateContact(db)
+	migrate.MigrateDelivery(db)
+	migrate.MigrateFavorite(db)
+	migrate.MigratePayment(db)
+	migrate.MigratePermission(db)
 	migrate.MigrateProduct(db)
 	migrate.MigrateProductTranslation(db)
+	migrate.MigrateRating(db)
 	migrate.MigrateShoppingCart(db)
-	migrate.MigratePayment(db)
-	migrate.MigrateFavorite(db)
+	migrate.MigrateUser(db)
+	migrate.MigrateAssociation(db)
 
 	db.AutoMigrate(
-		&models.User{},
+		&models.Auth{},
 		&models.Category{},
 		&models.CategoryTranslation{},
+		&models.Contact{},
+		&models.Delivery{},
+		&models.Favorite{},
+		&models.Payment{},
 		&models.Product{},
 		&models.ProductTranslation{},
+		&models.Rating{},
 		&models.ShoppingCart{},
-		&models.Payment{},
-		&models.Favorite{},
+		&models.User{},
 	)
 	db.Close()
 }

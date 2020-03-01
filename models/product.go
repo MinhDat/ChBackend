@@ -19,5 +19,6 @@ type Product struct {
 	Producer       string    `json:"producer"`
 	Material       string    `json:"material"`
 	ProductionDate time.Time `json:"production_date"`
-	price          float32   `json:"price"`
+	Price          float32   `json:"price"`
+	SaleOff        float32   `json:"sale_off"`
 }
