@@ -1,19 +1,17 @@
 package migrate
 
 import (
+	"ChGo/db"
 	"ChGo/models"
 	"log"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/lib/pq"
 )
 
-func MigrateUser(db *gorm.DB) {
+func MigrateUser() {
+	db := db.GetDB()
 	if !db.HasTable(&models.User{}) {
-		err := db.CreateTable(&models.User{})
-		if err != nil {
-			log.Println("User table already exists")
+		res := db.CreateTable(&models.User{})
+		if res != nil {
+			log.Println("User table has already created")
 		}
 	}
 }

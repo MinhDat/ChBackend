@@ -6,11 +6,11 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-// Product "Object
+// CategoryTranslation "Object"
 type CategoryTranslation struct {
 	common.Model
 	CategoryID  uuid.UUID `json:"category_id"`
-	Locale      string    `json:"name" binding:"required"`
+	Locale      string    `json:"locale" binding:"required"`
 	Name        string    `json:"name" binding:"required"`
 	Description string    `json:"description"`
 }

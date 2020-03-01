@@ -1,21 +1,17 @@
 package migrate
 
 import (
+	"ChGo/db"
 	"ChGo/models"
 	"log"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/lib/pq"
 )
 
-func MigrateProduct(db *gorm.DB) {
+func MigrateProduct() {
+	db := db.GetDB()
 	if !db.HasTable(&models.Product{}) {
-		err := db.CreateTable(&models.Product{})
-		if err != nil {
-			log.Println("Product table already exists")
+		res := db.CreateTable(&models.Product{})
+		if res != nil {
+			log.Println("Product table has already created")
 		}
 	}
-	db.Model(&models.Product{}).AddForeignKey("owner_id", "users(uuid)", "RESTRICT", "RESTRICT")
-	db.Model(&models.Product{}).AddForeignKey("category_id", "categories(uuid)", "RESTRICT", "RESTRICT")
 }

@@ -1,20 +1,17 @@
 package migrate
 
 import (
+	"ChGo/db"
 	"ChGo/models"
 	"log"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/lib/pq"
 )
 
-func MigrateFavorite(db *gorm.DB) {
+func MigrateFavorite() {
+	db := db.GetDB()
 	if !db.HasTable(&models.Favorite{}) {
-		err := db.CreateTable(&models.Favorite{})
-		if err != nil {
-			log.Println("Favorite table already exists")
+		res := db.CreateTable(&models.Favorite{})
+		if res != nil {
+			log.Println("Favorite table has already created")
 		}
 	}
-	db.Model(&models.Favorite{}).AddForeignKey("user_id", "users(uuid)", "RESTRICT", "RESTRICT")
 }

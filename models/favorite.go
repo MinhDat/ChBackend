@@ -6,9 +6,9 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-// Product "Object
+// Favorite "Object"
 type Favorite struct {
 	common.Model
-	UserID    uuid.UUID `json:"user_id"`
+	OwnerID   uuid.UUID `json:"owner_id"`
 	ProductID uuid.UUID `json:"product_id"`
 }
