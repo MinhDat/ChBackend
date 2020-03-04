@@ -1,17 +1,19 @@
 package migrate
 
 import (
-	"ChGo/db"
 	"ChGo/models"
 	"log"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/lib/pq"
 )
 
-func MigratePermission() {
-	db := db.GetDB()
+func MigratePermission(db *gorm.DB) {
 	if !db.HasTable(&models.Permission{}) {
-		res := db.CreateTable(&models.Permission{})
-		if res != nil {
-			log.Println("Permission table has already created")
+		err := db.CreateTable(&models.Permission{})
+		if err != nil {
+			log.Println("Permission table already exists")
 		}
 	}
 }

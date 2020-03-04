@@ -9,11 +9,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func MigrateAuth(db *gorm.DB) {
-	if !db.HasTable(&models.Auth{}) {
-		err := db.CreateTable(&models.Auth{})
+func MigrateRating(db *gorm.DB) {
+	if !db.HasTable(&models.Rating{}) {
+		err := db.CreateTable(&models.Rating{})
 		if err != nil {
-			log.Println("Auth table already exists")
+			log.Println("Rating table already exists")
 		}
 	}
 }

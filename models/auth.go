@@ -6,12 +6,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-const (
-	PERMISSION    = 0
-	NO_PERMISSION = 1
-)
-
-// Auth "Object"
+// Auth "Object
 type Auth struct {
 	common.Model
 	OwnerID   uuid.UUID `json:"owner_id"`

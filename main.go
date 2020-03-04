@@ -19,12 +19,12 @@ func main() {
 
 	v1 := r.Group("/v1")
 	{
-		tasks := v1.Group("/product", middlewares.Auth)
+		product := v1.Group("/product", middlewares.Auth)
 		{
-			tasks.GET("/", controllers.GetProducts)
-			tasks.POST("/", controllers.CreateProduct)
-			tasks.PUT("/:id", controllers.UpdateProduct)
-			tasks.DELETE("/:id", controllers.DeleteProduct)
+			product.GET("/", controllers.GetProducts)
+			product.POST("/", controllers.CreateProduct)
+			product.PUT("/:id", controllers.UpdateProduct)
+			product.DELETE("/:id", controllers.DeleteProduct)
 		}
 
 		noauth := v1.Group("/noauth")

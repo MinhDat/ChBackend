@@ -6,7 +6,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-// Contact "Object"
+// User "Object
 type Contact struct {
 	common.Model
 	OwnerID   uuid.UUID   `json:"owner_id"`

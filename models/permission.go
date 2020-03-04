@@ -6,7 +6,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-// Permission "Object"
+// Permission "Object
 type Permission struct {
 	common.Model
 	AuthID uuid.UUID `json:"auth_id"`
