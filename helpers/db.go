@@ -1,4 +1,4 @@
-package db
+package helper
 
 import (
 	"fmt"
@@ -27,7 +27,7 @@ func Init() {
 	password := getEnv("PG_PASSWORD", "")
 	host := getEnv("PG_HOST", "localhost")
 	port := getEnv("PG_PORT", "8080")
-	database := getEnv("PG_DB", "tasks")
+	database := getEnv("PG_DB", "products")
 
 	dbinfo := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable",
 		user,

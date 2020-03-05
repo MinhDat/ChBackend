@@ -1,13 +1,13 @@
 package migrate
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
 )
 
 func MigratePaymentInfo() {
-	db := db.GetDB()
+	db := helper.GetDB()
 	if !db.HasTable(&models.PaymentInfo{}) {
 		res := db.CreateTable(&models.PaymentInfo{})
 		if res != nil {

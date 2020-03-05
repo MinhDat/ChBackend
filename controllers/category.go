@@ -5,21 +5,21 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 )
 
 func GetCategories(c *gin.Context) {
 
 	var categorys []models.Category
-	db := db.GetDB()
+	db := helper.GetDB()
 	db.Find(&categorys)
 	c.JSON(200, categorys)
 }
 
 func CreateCategory(c *gin.Context) {
 	var category models.Category
-	var db = db.GetDB()
+	var db = helper.GetDB()
 
 	if err := c.BindJSON(&category); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
@@ -37,7 +37,7 @@ func UpdateCategory(c *gin.Context) {
 	id := c.Param("id")
 	var category models.Category
 
-	db := db.GetDB()
+	db := helper.GetDB()
 	if err := db.Where("uuid = ?", id).First(&category).Error; err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		return
@@ -50,7 +50,7 @@ func UpdateCategory(c *gin.Context) {
 func DeleteCategory(c *gin.Context) {
 	id := c.Param("id")
 	var category models.Category
-	db := db.GetDB()
+	db := helper.GetDB()
 
 	if err := db.Where("uuid = ?", id).First(&category).Error; err != nil {
 		c.AbortWithStatus(http.StatusNotFound)

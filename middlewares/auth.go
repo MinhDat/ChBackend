@@ -1,11 +1,12 @@
 package middlewares
 
 import (
-	"ChGo/db"
 	"ChGo/models"
 	"net/http"
 	"strings"
 	"time"
+
+	helper "ChGo/helpers"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -64,7 +65,7 @@ type Login struct {
 	Password string `binding:"required"`
 }
 
-var hmacSampleSecret = []byte("ChStore")
+var hmacSampleSecret = []byte("J9ggDYtnuqjVi1g8")
 
 // Create a struct that will be encoded to a JWT.
 // We add jwt.StandardClaims as an embedded type, to provide fields like expiry time
@@ -84,7 +85,7 @@ func Sign(c *gin.Context) {
 	var login Login
 	var user models.User
 
-	db := db.GetDB()
+	db := helper.GetDB()
 
 	if err := c.BindJSON(&login); err != nil {
 		c.AbortWithStatusJSON(http.StatusForbidden, models.Response{
@@ -139,7 +140,7 @@ func Refresh(c *gin.Context) {
 	if claims, ok := token.Claims.(*RefreshClaims); ok && err == nil && token.Valid {
 		var user models.User
 
-		db := db.GetDB()
+		db := helper.GetDB()
 		if err := db.Where("uuid = ?", claims.UUID).First(&user).Error; err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
 			return

@@ -1,13 +1,13 @@
 package migrate
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
 )
 
 func MigrateAuth() {
-	db := db.GetDB()
+	db := helper.GetDB()
 	if !db.HasTable(&models.Auth{}) {
 		err := db.CreateTable(&models.Auth{})
 		if err != nil {

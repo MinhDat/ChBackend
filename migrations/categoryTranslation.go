@@ -1,13 +1,13 @@
 package migrate
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
 )
 
 func MigrateCategoryTranslation() {
-	db := db.GetDB()
+	db := helper.GetDB()
 	if !db.HasTable(&models.CategoryTranslation{}) {
 		res := db.CreateTable(&models.CategoryTranslation{})
 		if res != nil {

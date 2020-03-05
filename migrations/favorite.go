@@ -1,13 +1,13 @@
 package migrate
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
 )
 
 func MigrateFavorite() {
-	db := db.GetDB()
+	db := helper.GetDB()
 	if !db.HasTable(&models.Favorite{}) {
 		res := db.CreateTable(&models.Favorite{})
 		if res != nil {

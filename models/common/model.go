@@ -16,7 +16,9 @@ type Model struct {
 }
 
 func (model *Model) BeforeCreate(scope *gorm.Scope) error {
-	model.UUID, _ = uuid.NewV4()
+	if model.UUID == uuid.Nil {
+		model.UUID, _ = uuid.NewV4()
+	}
 	model.CreatedAt = time.Now()
 	return nil
 }

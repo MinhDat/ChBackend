@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 
 	migrate "ChGo/migrations"
@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	db.Init()
-	db := db.GetDB()
+	helper.Init()
+	db := helper.GetDB()
 
 	// Migrate database
 	migrate.MigrateAuth()
@@ -31,7 +31,7 @@ func main() {
 	migrate.MigratePlan()
 	migrate.MigrateProduct()
 	migrate.MigrateProductTranslation()
-	migrate.MigrateShoppingCart()
+	migrate.MigrateOrder()
 	migrate.MigrateUser()
 	migrate.MigrateUserPlan()
 	migrate.MigrateUserRaw()
@@ -52,7 +52,7 @@ func main() {
 		&models.Product{},
 		&models.ProductTranslation{},
 		&models.Feedback{},
-		&models.ShoppingCart{},
+		&models.Order{},
 		&models.User{},
 		&models.UserPlan{},
 		&models.UserRaw{},

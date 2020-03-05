@@ -1,13 +1,13 @@
 package migrate
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
 )
 
 func MigrateMeta() {
-	db := db.GetDB()
+	db := helper.GetDB()
 	if !db.HasTable(&models.Meta{}) {
 		res := db.CreateTable(&models.Meta{})
 		if res != nil {

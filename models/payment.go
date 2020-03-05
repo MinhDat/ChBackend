@@ -13,7 +13,7 @@ const (
 // Payment "Object"
 type Payment struct {
 	common.Model
-	// ShoppingCartID uuid.UUID `json:"shopping_cart_id" sql:"index"`
+	// OrderID uuid.UUID `json:"order_id" sql:"index"`
 	Method string `json:"method"`
 	Type   int    `json:"type"`
 	Status int    `json:"status"`

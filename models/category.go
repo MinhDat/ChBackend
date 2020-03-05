@@ -8,9 +8,9 @@ import (
 
 // Constant for category type
 const (
-	DEFAULT  = 0
-	TOPIC    = 1
-	HOT_PICK = 2
+	CATEGORY_DEFAULT  = 0
+	CATEGORY_TOPIC    = 1
+	CATEGORY_HOT_PICK = 2
 )
 
 // There is image in media table
@@ -19,8 +19,7 @@ const (
 type Category struct {
 	common.Model
 	Name     string    `json:"name" binding:"required"`
-	Image    string    `json:"image"`
 	OwnerID  uuid.UUID `json:"owner_id" sql:"index"`
-	ParentID uuid.UUID `json:"parent_id"`
+	ParentID uuid.UUID `json:"parent_id" sql:"index"`
 	Type     int       `json:"type"`
 }

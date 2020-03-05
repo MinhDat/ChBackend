@@ -5,13 +5,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 )
 
 func Register(c *gin.Context) {
 	var user models.User
-	var db = db.GetDB()
+	var db = helper.GetDB()
 
 	if err := c.BindJSON(&user); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{

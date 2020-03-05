@@ -1,13 +1,13 @@
 package migrate
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
 )
 
 func MigrateUserPlan() {
-	db := db.GetDB()
+	db := helper.GetDB()
 	if !db.HasTable(&models.UserPlan{}) {
 		res := db.CreateTable(&models.UserPlan{})
 		if res != nil {

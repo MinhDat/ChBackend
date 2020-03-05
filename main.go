@@ -6,14 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 
 	controllers "ChGo/controllers"
-	"ChGo/db"
+	helper "ChGo/helpers"
 	middlewares "ChGo/middlewares"
 )
 
 func main() {
 	log.Println("Starting server..")
 
-	db.Init()
+	helper.Init()
 
 	r := gin.Default()
 

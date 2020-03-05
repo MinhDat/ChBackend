@@ -1,7 +1,7 @@
 package migrate
 
 import (
-	"ChGo/db"
+	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
 
@@ -10,7 +10,7 @@ import (
 )
 
 func MigratePlan() {
-	db := db.GetDB()
+	db := helper.GetDB()
 	if !db.HasTable(&models.Plan{}) {
 		err := db.CreateTable(&models.Plan{})
 		if err != nil {

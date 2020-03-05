@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	thumbnail = 0
-	image     = 1
+	IMAGE_THUMBNAIL = 0
+	IMAGE_PROFILE   = 1
 )
 
 // Media "Object"

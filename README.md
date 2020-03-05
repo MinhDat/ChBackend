@@ -25,15 +25,15 @@ docker-compose up
 
 You can then hit the following endpoints:
 
-| Method | Route               | Header                                      | Body                                         |
-| ------ | ------------------- | ------------------------------------------- | -------------------------------------------- |
-| GET    | /v1/tasks           | `{Authorization: "Bearer ${Token}"}`        |                                              |
-| POST   | /v1/tasks           | `{Authorization: "Bearer ${Token}"}`        | `{"title": "task title"}`                    |
-| DELETE | /v1/tasks/:id       | `{Authorization: "Bearer ${Token}"}`        |                                              |
-| PUT    | /v1/tasks/:id       | `{Authorization: "Bearer ${Token}"}`        | `{"title": "task title", "completed": true}` |
-| POST   | /v1/noauth/register |                                             | `{"Usename": "admin", "Password": "admin"}`  |
-| POST   | /v1/noauth/login    |                                             | `{"Usename": "admin", "Password": "admin"}`  |
-| GET    | /v1/noauth/refresh  | `{Authorization: "Bearer ${RefreshToken}"}` | `{"Usename": "admin", "Password": "admin"}`  |
+| Method | Route               | Header                                      | Body                                            |
+| ------ | ------------------- | ------------------------------------------- | ----------------------------------------------- |
+| GET    | /v1/products        | `{Authorization: "Bearer ${Token}"}`        |                                                 |
+| POST   | /v1/products        | `{Authorization: "Bearer ${Token}"}`        | `{"title": "product title"}`                    |
+| DELETE | /v1/products/:id    | `{Authorization: "Bearer ${Token}"}`        |                                                 |
+| PUT    | /v1/products/:id    | `{Authorization: "Bearer ${Token}"}`        | `{"title": "product title", "completed": true}` |
+| POST   | /v1/noauth/register |                                             | `{"Usename": "admin", "Password": "admin"}`     |
+| POST   | /v1/noauth/login    |                                             | `{"Usename": "admin", "Password": "admin"}`     |
+| GET    | /v1/noauth/refresh  | `{Authorization: "Bearer ${RefreshToken}"}` | `{"Usename": "admin", "Password": "admin"}`     |
 
 ## Development
 

@@ -9,7 +9,7 @@ import (
 // Delivery "Object
 type Delivery struct {
 	common.Model
-	ShoppingCartID uuid.UUID `json:"shopping_cart_id" sql:"index"`
+	OrderID uuid.UUID `json:"order_id" sql:"index"`
 	Status         int       `json:"status"`
 	Reason         string    `json:"reason"`
 	Recipient      uuid.UUID `json:"recipient" sql:"index"`
