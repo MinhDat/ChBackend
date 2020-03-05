@@ -8,6 +8,12 @@
 ./migrate.sh
 ```
 
+## Seed data
+
+```
+./seed.sh
+```
+
 ## Docker
 
 Stop & remove older docker container
