@@ -13,12 +13,14 @@ const (
 	HOT_PICK = 2
 )
 
+// There is image in media table
+
 // Category "Object"
 type Category struct {
 	common.Model
 	Name     string    `json:"name" binding:"required"`
 	Image    string    `json:"image"`
-	OwnerID  uuid.UUID `json:"owner_id"`
+	OwnerID  uuid.UUID `json:"owner_id" sql:"index"`
 	ParentID uuid.UUID `json:"parent_id"`
 	Type     int       `json:"type"`
 }

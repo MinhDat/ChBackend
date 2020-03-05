@@ -9,7 +9,7 @@ import (
 // Permission "Object
 type Permission struct {
 	common.Model
-	AuthID uuid.UUID `json:"auth_id"`
+	AuthID uuid.UUID `json:"auth_id" sql:"index"`
 	Method string    `json:"name"`
 	Path   string    `json:"path"`
 }

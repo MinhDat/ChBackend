@@ -9,9 +9,9 @@ import (
 // Delivery "Object
 type Delivery struct {
 	common.Model
-	ShoppingCartID uuid.UUID `json:"shopping_cart_id"`
+	ShoppingCartID uuid.UUID `json:"shopping_cart_id" sql:"index"`
 	Status         int       `json:"status"`
 	Reason         string    `json:"reason"`
-	Recipient      uuid.UUID `json:"recipient"`
-	Sender         uuid.UUID `json:"sender"`
+	Recipient      uuid.UUID `json:"recipient" sql:"index"`
+	Sender         uuid.UUID `json:"sender" sql:"index"`
 }

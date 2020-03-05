@@ -1,62 +1,41 @@
 package main
 
 import (
+	"ChGo/db"
 	"ChGo/models"
-	"fmt"
-	"log"
-	"os"
 
 	migrate "ChGo/migrations"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/lib/pq"
 )
 
-func getEnv(key, fallback string) string {
-	if value, ok := os.LookupEnv(key); ok {
-		return value
-	}
-	return fallback
-}
-
 func main() {
-	user := getEnv("PG_USER", "hugo")
-	password := getEnv("PG_PASSWORD", "")
-	host := getEnv("PG_HOST", "localhost")
-	port := getEnv("PG_PORT", "8080")
-	database := getEnv("PG_DB", "tasks")
-
-	dbinfo := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable",
-		user,
-		password,
-		host,
-		port,
-		database,
-	)
-
-	db, err := gorm.Open("postgres", dbinfo)
-	if err != nil {
-		log.Println("Failed to connect to database")
-		panic(err)
-	}
-	log.Println("Database connected")
+	db.Init()
+	db := db.GetDB()
 
 	// Migrate database
-	migrate.MigrateAuth(db)
-	migrate.MigrateCategory(db)
-	migrate.MigrateCategoryTranslation(db)
-	migrate.MigrateContact(db)
-	migrate.MigrateDelivery(db)
-	migrate.MigrateFavorite(db)
-	migrate.MigratePayment(db)
-	migrate.MigratePermission(db)
-	migrate.MigrateProduct(db)
-	migrate.MigrateProductTranslation(db)
-	migrate.MigrateRating(db)
-	migrate.MigrateShoppingCart(db)
-	migrate.MigrateUser(db)
-	migrate.MigrateAssociation(db)
+	migrate.MigrateAuth()
+	migrate.MigrateCategory()
+	migrate.MigrateCategoryTranslation()
+	migrate.MigrateContact()
+	migrate.MigrateDelivery()
+	migrate.MigrateDeliveryPayment()
+	migrate.MigrateFavorite()
+	migrate.MigrateFeedback()
+	migrate.MigrateMedia()
+	migrate.MigrateMeta()
+	migrate.MigratePayment()
+	migrate.MigratePaymentInfo()
+	migrate.MigratePermission()
+	migrate.MigratePlan()
+	migrate.MigrateProduct()
+	migrate.MigrateProductTranslation()
+	migrate.MigrateShoppingCart()
+	migrate.MigrateUser()
+	migrate.MigrateUserPlan()
+	migrate.MigrateUserRaw()
+	migrate.MigrateAssociation()
 
 	db.AutoMigrate(
 		&models.Auth{},
@@ -64,13 +43,19 @@ func main() {
 		&models.CategoryTranslation{},
 		&models.Contact{},
 		&models.Delivery{},
+		&models.DeliveryPayment{},
 		&models.Favorite{},
+		&models.Media{},
+		&models.Meta{},
 		&models.Payment{},
+		&models.PaymentInfo{},
 		&models.Product{},
 		&models.ProductTranslation{},
-		&models.Rating{},
+		&models.Feedback{},
 		&models.ShoppingCart{},
 		&models.User{},
+		&models.UserPlan{},
+		&models.UserRaw{},
 	)
 	db.Close()
 }

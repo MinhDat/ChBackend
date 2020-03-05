@@ -2,14 +2,19 @@ package models
 
 import (
 	"ChGo/models/common"
+)
 
-	uuid "github.com/satori/go.uuid"
+const (
+	CASHING = 0
+	BANKING = 1
+	VISA    = 2
 )
 
 // Payment "Object"
 type Payment struct {
 	common.Model
-	ShoppingCartID uuid.UUID `json:"shopping_cart_id"`
-	Method         string    `json:"method"`
-	Status         int
+	// ShoppingCartID uuid.UUID `json:"shopping_cart_id" sql:"index"`
+	Method string `json:"method"`
+	Type   int    `json:"type"`
+	Status int    `json:"status"`
 }

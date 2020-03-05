@@ -9,12 +9,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func MigratePermission() {
+func MigratePlan() {
 	db := db.GetDB()
-	if !db.HasTable(&models.Permission{}) {
-		err := db.CreateTable(&models.Permission{})
+	if !db.HasTable(&models.Plan{}) {
+		err := db.CreateTable(&models.Plan{})
 		if err != nil {
-			log.Println("Permission table already exists")
+			log.Println("Plan table already exists")
 		}
 	}
 }

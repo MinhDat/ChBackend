@@ -7,6 +7,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// There is image in media table
+
 // User "Object"
 type User struct {
 	common.Model

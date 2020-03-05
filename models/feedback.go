@@ -9,8 +9,8 @@ import (
 // Feedback "Object"
 type Feedback struct {
 	common.Model
-	ProductID  uuid.UUID `json:"product_id"`
-	CustomerID string    `json:"customer_id"`
+	ProductID  uuid.UUID `json:"product_id" sql:"index"`
+	CustomerID string    `json:"customer_id" sql:"index"`
 	Star       int       `json:"star"`
 	Comment    string    `json:"comment"`
 }

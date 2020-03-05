@@ -9,7 +9,7 @@ import (
 // User "Object
 type Contact struct {
 	common.Model
-	OwnerID   uuid.UUID   `json:"owner_id"`
+	OwnerID   uuid.UUID   `json:"owner_id" sql:"index"`
 	FirstName string      `json:"first_name"`
 	LastName  string      `json:"last_name"`
 	Email     string      `json:"email"`
