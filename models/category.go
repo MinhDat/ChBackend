@@ -2,8 +2,6 @@ package models
 
 import (
 	"ChGo/models/common"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 // Constant for category type
@@ -18,8 +16,8 @@ const (
 // Category "Object"
 type Category struct {
 	common.Model
-	Name     string    `json:"name" binding:"required"`
-	OwnerID  uuid.UUID `json:"owner_id" sql:"index"`
-	ParentID uuid.UUID `json:"parent_id" sql:"index"`
-	Type     int       `json:"type"`
+	Name     string `json:"name" binding:"required" gorm:"type:varchar(50)"`
+	OwnerID  int64  `json:"owner_id" sql:"index"`
+	ParentID int64  `json:"parent_id" sql:"index"`
+	Type     int8   `json:"type"`
 }

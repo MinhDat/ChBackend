@@ -4,9 +4,6 @@ import (
 	helper "ChGo/helpers"
 	"ChGo/models"
 	"log"
-
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/lib/pq"
 )
 
 func MigratePermission() {

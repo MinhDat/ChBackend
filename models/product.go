@@ -4,8 +4,6 @@ import (
 	"time"
 
 	"ChGo/models/common"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 // There is image in media table
@@ -13,13 +11,11 @@ import (
 // Product "Object"
 type Product struct {
 	common.Model
-	Name       string    `json:"name" binding:"required"`
-	OwnerID    uuid.UUID `json:"owner_id" sql:"index"`
-	CategoryID uuid.UUID `json:"category_id" sql:"index"`
-	// Image          string    `json:"image"`
-	// Thumbnail      string    `json:"thumbnail"`
-	Producer       string    `json:"producer"`
-	Material       string    `json:"material"`
+	Name           string    `json:"name" binding:"required" gorm:"type:varchar(50)"`
+	OwnerID        int64     `json:"owner_id" sql:"index"`
+	CategoryID     int64     `json:"category_id" sql:"index"`
+	Producer       string    `json:"producer" gorm:"type:varchar(50)"`
+	Material       string    `json:"material" gorm:"type:varchar(50)"`
 	ProductionDate time.Time `json:"production_date"`
 	Price          float32   `json:"price"`
 	SaleOff        float32   `json:"sale_off"`

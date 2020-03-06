@@ -7,8 +7,8 @@ import (
 // Plan "Object"
 type Plan struct {
 	common.Model
-	Name          string      `json:"name"`
-	Description   string      `json:"description"`
-	Status        int         `json:"status"`
+	Name          string      `json:"name" gorm:"type:varchar(50)"`
+	Description   string      `json:"description" gorm:"type:varchar(255)"`
+	Status        int8        `json:"status"`
 	Specification common.JSON `json:"specification"`
 }

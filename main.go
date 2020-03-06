@@ -19,6 +19,15 @@ func main() {
 
 	v1 := r.Group("/v1")
 	{
+
+		category := v1.Group("/category", middlewares.Auth)
+		{
+			category.GET("/", controllers.GetCategories)
+			category.POST("/", controllers.CreateCategory)
+			category.PUT("/:id", controllers.UpdateCategory)
+			category.DELETE("/:id", controllers.DeleteCategory)
+		}
+
 		product := v1.Group("/product", middlewares.Auth)
 		{
 			product.GET("/", controllers.GetProducts)

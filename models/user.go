@@ -12,7 +12,7 @@ import (
 // User "Object"
 type User struct {
 	common.Model
-	Username string `form:"username" json:"username" binding:"required"`
+	Username string `form:"username" json:"username" binding:"required" gorm:"type:varchar(50)"`
 	Password string `form:"password" json:"password" binding:"required"`
 }
 

@@ -27,6 +27,10 @@ func User() {
 
 	// Make admin
 	for i := 0; i < TOTAL_ADMIN; i++ {
+		// username := faker.Internet().UserName()
+		// if len(username) > 50 {
+		// 	username = username[0:49]
+		// }
 		user := models.User{
 			Username: faker.Internet().UserName(),
 			Password: faker.Internet().Password(8, 8),
@@ -35,7 +39,7 @@ func User() {
 
 		db.Create(&user)
 		contact := models.Contact{
-			UUID:      user.UUID,
+			ID:        user.ID,
 			FirstName: faker.Name().FirstName(),
 			LastName:  faker.Name().LastName(),
 			Email:     faker.Internet().Email(),
@@ -47,10 +51,10 @@ func User() {
 		db.Create(&contact)
 
 		media := models.Media{
-			CorrelationID:  user.UUID,
+			CorrelationID:  user.ID,
 			TableReference: "user",
 			Path:           faker.Avatar().Url("jpg", 200, 200),
-			OwnerID:        user.UUID,
+			OwnerID:        user.ID,
 			Type:           models.IMAGE_THUMBNAIL,
 			Extension:      "jpg",
 		}

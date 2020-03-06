@@ -13,8 +13,8 @@ const (
 // Payment "Object"
 type Payment struct {
 	common.Model
-	// OrderID uuid.UUID `json:"order_id" sql:"index"`
-	Method string `json:"method"`
-	Type   int    `json:"type"`
-	Status int    `json:"status"`
+	// OrderID int `json:"order_id" sql:"index"`
+	Method string `json:"method" gorm:"type:varchar(50)"`
+	Type   int8   `json:"type"`
+	Status int8   `json:"status"`
 }

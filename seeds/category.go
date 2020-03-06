@@ -31,13 +31,13 @@ func Category() {
 		oID := rand.Intn(max - min)
 		cat := models.Category{
 			Name:    value,
-			OwnerID: users[oID].UUID,
+			OwnerID: users[oID].ID,
 			Type:    models.CATEGORY_DEFAULT,
 		}
 		db.Create(&cat)
 
 		media := models.Media{
-			CorrelationID:  cat.UUID,
+			CorrelationID:  cat.ID,
 			TableReference: "categories",
 			Path:           faker.Avatar().Url("jpg", 500, 250),
 			OwnerID:        cat.OwnerID,
@@ -51,13 +51,13 @@ func Category() {
 		oID := rand.Intn(max - min)
 		cat := models.Category{
 			Name:    value,
-			OwnerID: users[oID].UUID,
+			OwnerID: users[oID].ID,
 			Type:    models.CATEGORY_TOPIC,
 		}
 		db.Create(&cat)
 
 		media := models.Media{
-			CorrelationID:  cat.UUID,
+			CorrelationID:  cat.ID,
 			TableReference: "categories",
 			Path:           faker.Avatar().Url("jpg", 500, 250),
 			OwnerID:        cat.OwnerID,

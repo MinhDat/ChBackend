@@ -2,16 +2,14 @@ package models
 
 import (
 	"ChGo/models/common"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 // ProductTranslation "Object"
 type ProductTranslation struct {
 	common.Model
-	ProductID   uuid.UUID `json:"product_id" sql:"index"`
-	Locale      string    `json:"locale" binding:"required"`
-	Name        string    `json:"name" binding:"required"`
-	Description string    `json:"description"`
-	Origin      string    `json:"origin"`
+	ProductID   int64  `json:"product_id" sql:"index"`
+	Locale      string `json:"locale" binding:"required" gorm:"type:varchar(5)"`
+	Name        string `json:"name" binding:"required" gorm:"type:varchar(50)"`
+	Description string `json:"description" gorm:"type:varchar(255)"`
+	Origin      string `json:"origin" gorm:"type:varchar(100)"`
 }

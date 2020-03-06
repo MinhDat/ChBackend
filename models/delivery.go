@@ -2,16 +2,14 @@ package models
 
 import (
 	"ChGo/models/common"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 // Delivery "Object
 type Delivery struct {
 	common.Model
-	OrderID uuid.UUID `json:"order_id" sql:"index"`
-	Status         int       `json:"status"`
-	Reason         string    `json:"reason"`
-	Recipient      uuid.UUID `json:"recipient" sql:"index"`
-	Sender         uuid.UUID `json:"sender" sql:"index"`
+	OrderID   int64  `json:"order_id" sql:"index"`
+	Status    int8   `json:"status"`
+	Reason    string `json:"reason" gorm:"type:varchar(255)"`
+	Recipient int64  `json:"recipient" sql:"index"`
+	Sender    int64  `json:"sender" sql:"index"`
 }

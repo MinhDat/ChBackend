@@ -7,6 +7,7 @@ import (
 
 func main() {
 	helper.Init()
+	seed.Auth()
 	seed.User()
 	seed.Category()
 	helper.CloseDB()

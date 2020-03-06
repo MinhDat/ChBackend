@@ -76,7 +76,7 @@ type Claims struct {
 
 // RefreshClaims Object
 type RefreshClaims struct {
-	UUID uuid.UUID
+	id int
 	jwt.StandardClaims
 }
 
@@ -141,7 +141,7 @@ func Refresh(c *gin.Context) {
 		var user models.User
 
 		db := helper.GetDB()
-		if err := db.Where("uuid = ?", claims.UUID).First(&user).Error; err != nil {
+		if err := db.Where("uuid = ?", claims.ID).First(&user).Error; err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, unAuthorizedResponse)
 			return
 		}
@@ -167,7 +167,7 @@ func generateToken(user models.User) (tokenString string, refreshTokenString str
 	}
 
 	refreshClaims := &RefreshClaims{
-		UUID: user.UUID,
+		id: user.ID,
 		StandardClaims: jwt.StandardClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: refreshExpirationTime.Unix(),

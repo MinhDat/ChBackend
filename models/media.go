@@ -2,8 +2,6 @@ package models
 
 import (
 	"ChGo/models/common"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 const (
@@ -14,11 +12,11 @@ const (
 // Media "Object"
 type Media struct {
 	common.Model
-	CorrelationID  uuid.UUID `json:"correlation_id"`
-	TableReference string    `json:"table_reference"`
-	Path           string    `json:"path"`
-	Size           float32   `json:"size"`
-	Type           int       `json:"type"`
-	OwnerID        uuid.UUID `json:"owner_id" sql:"index"`
-	Extension      string    `json:"extension"`
+	CorrelationID  int64   `json:"correlation_id"`
+	TableReference string  `json:"table_reference" gorm:"type:varchar(100)"`
+	Path           string  `json:"path" gorm:"type:varchar(255)"`
+	Size           float32 `json:"size"`
+	Type           int8    `json:"type"`
+	OwnerID        int64   `json:"owner_id" sql:"index"`
+	Extension      string  `json:"extension" gorm:"type:varchar(5)"`
 }

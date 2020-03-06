@@ -5,9 +5,6 @@ import (
 	"ChGo/models"
 
 	migrate "ChGo/migrations"
-
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/lib/pq"
 )
 
 func main() {

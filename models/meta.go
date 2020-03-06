@@ -2,14 +2,12 @@ package models
 
 import (
 	"ChGo/models/common"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 // Meta "Object
 type Meta struct {
 	common.Model
-	CorrelationID uuid.UUID   `json:"correlation_id" binding:"required"`
-	Key           string      `json:"key" binding:"required"`
+	CorrelationID int64       `json:"correlation_id" binding:"required"`
+	Key           string      `json:"key" binding:"required" gorm:"type:varchar(50)"`
 	Value         common.JSON `json:"value"`
 }

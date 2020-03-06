@@ -1,4 +1,4 @@
 vendor/
 postgres-data
 build
-seeds/files
+seeds/files/*.csv
