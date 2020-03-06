@@ -30,6 +30,7 @@ func main() {
 	migrate.MigrateProductTranslation()
 	migrate.MigrateOrder()
 	migrate.MigrateUser()
+	migrate.MigrateUserAuth()
 	migrate.MigrateUserPlan()
 	migrate.MigrateUserRaw()
 	migrate.MigrateAssociation()
@@ -51,6 +52,7 @@ func main() {
 		&models.Feedback{},
 		&models.Order{},
 		&models.User{},
+		&models.UserAuth{},
 		&models.UserPlan{},
 		&models.UserRaw{},
 	)
