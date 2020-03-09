@@ -13,30 +13,44 @@ const (
 	TOTAL_CUSTOMER = 5
 )
 
+const (
+	System_user = "admin"
+	System_pass = "admin"
+)
+
+// User seeding data
 func User() {
 	var db = helper.GetDB()
 	user := models.User{
-		Username: "admin",
-		Password: "admin",
+		Username: System_user,
+		Password: System_pass,
 	}
 
 	db.Create(&user)
 
 	helper.Write("user.csv", [][]string{{"usename", "password"}})
-	helper.Write("user.csv", [][]string{{"admin", "admin"}})
+	helper.Write("user.csv", [][]string{{System_user, System_pass}})
 
 	// Make admin
-	for i := 0; i < TOTAL_ADMIN; i++ {
-		// username := faker.Internet().UserName()
-		// if len(username) > 50 {
-		// 	username = username[0:49]
-		// }
+	createUser(TOTAL_ADMIN, models.AUTH_ADMIN)
+	// Make retailer
+	createUser(TOTAL_RETAILER, models.AUTH_RETAILER)
+	// Make customer
+	createUser(TOTAL_CUSTOMER, models.AUTH_CUSTOMER)
+
+}
+
+func createUser(amount int, auth string) {
+	var db = helper.GetDB()
+	for i := 0; i < amount; i++ {
+		// Save user data seeding into csv file
 		user := models.User{
 			Username: faker.Internet().UserName(),
 			Password: faker.Internet().Password(8, 8),
 		}
 		helper.Write("user.csv", [][]string{{user.Username, user.Password}})
 
+		// Create User
 		db.Create(&user)
 		contact := models.Contact{
 			ID:        user.ID,
@@ -50,6 +64,7 @@ func User() {
 		}
 		db.Create(&contact)
 
+		// Create User Media
 		media := models.Media{
 			CorrelationID:  user.ID,
 			TableReference: "user",
@@ -59,5 +74,13 @@ func User() {
 			Extension:      "jpg",
 		}
 		db.Create(&media)
+
+		// Create User-Autheration
+		userAuth := models.UserAuth{
+			OwnerID: user.ID,
+			AuthID:  auth,
+		}
+
+		db.Create(&userAuth)
 	}
 }

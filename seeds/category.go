@@ -3,65 +3,41 @@ package seed
 import (
 	helper "ChGo/helpers"
 	"ChGo/models"
-	"math/rand"
-	"time"
 
 	"syreclabs.com/go/faker"
-)
-
-const (
-	MAX_ADMIN    = 5
-	MAX_RETAILER = 5
-	MAX_CUSTOMER = 5
 )
 
 var data = []string{"Sport", "Travel", "Music", "Game", "Photo", "Food"}
 var data2 = []string{"Woman", "Man", "Child", "Animal", "Life", "Book"}
 
+// Category seeding data
 func Category() {
 	db := helper.GetDB()
-	var users []models.User
-	db.Find(&users)
+	var user models.User
+	db.Where("username = ?", System_user).First(&user)
 
-	rand.Seed(time.Now().UnixNano())
-	min := 0
-	max := len(users)
+	createCategory(data, user.ID, models.CATEGORY_DEFAULT, models.IMAGE_PROFILE)
+	createCategory(data2, user.ID, models.CATEGORY_TOPIC, models.IMAGE_PROFILE)
+}
 
+func createCategory(arr []string, oID int64, catType int8, imageType int8) {
+	db := helper.GetDB()
 	for _, value := range data {
-		oID := rand.Intn(max - min)
+		// Create category
 		cat := models.Category{
 			Name:    value,
-			OwnerID: users[oID].ID,
-			Type:    models.CATEGORY_DEFAULT,
+			OwnerID: oID,
+			Type:    catType,
 		}
 		db.Create(&cat)
 
+		// Create Media for category
 		media := models.Media{
 			CorrelationID:  cat.ID,
 			TableReference: "categories",
 			Path:           faker.Avatar().Url("jpg", 500, 250),
 			OwnerID:        cat.OwnerID,
-			Type:           models.IMAGE_PROFILE,
-			Extension:      "jpg",
-		}
-		db.Create(&media)
-	}
-
-	for _, value := range data2 {
-		oID := rand.Intn(max - min)
-		cat := models.Category{
-			Name:    value,
-			OwnerID: users[oID].ID,
-			Type:    models.CATEGORY_TOPIC,
-		}
-		db.Create(&cat)
-
-		media := models.Media{
-			CorrelationID:  cat.ID,
-			TableReference: "categories",
-			Path:           faker.Avatar().Url("jpg", 500, 250),
-			OwnerID:        cat.OwnerID,
-			Type:           models.IMAGE_PROFILE,
+			Type:           imageType,
 			Extension:      "jpg",
 		}
 		db.Create(&media)

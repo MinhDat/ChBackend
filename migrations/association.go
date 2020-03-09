@@ -22,7 +22,7 @@ func MigrateAssociation() {
 	db.Model(&models.Product{}).AddForeignKey("category_id", "categories(id)", "CASCADE", "CASCADE")
 	db.Model(&models.ProductTranslation{}).AddForeignKey("product_id", "products(id)", "CASCADE", "CASCADE")
 	db.Model(&models.UserAuth{}).AddForeignKey("owner_id", "users(id)", "CASCADE", "CASCADE")
-	db.Model(&models.UserAuth{}).AddForeignKey("auth_id", "auths(id)", "CASCADE", "NO ACTION")
+	db.Model(&models.UserAuth{}).AddForeignKey("auth_id", "auths(name)", "CASCADE", "NO ACTION")
 	db.Model(&models.UserPlan{}).AddForeignKey("owner_id", "users(id)", "CASCADE", "CASCADE")
 	db.Model(&models.UserPlan{}).AddForeignKey("plan_id", "plans(id)", "CASCADE", "NO ACTION")
 }
